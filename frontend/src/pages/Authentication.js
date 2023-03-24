@@ -30,15 +30,17 @@ export async function action({ request }) {
   });
 
   if (response.status === 422 || response.status === 401) {
-    console.log("11111");
     return response;
   }
 
   if (!response.ok) {
-    console.log("2222");
-
     throw json({ message: "Could not authenticate user." }, { status: 500 });
   }
+
+  //get token from BE and save in LocalStorage
+  const resData = await response.json();
+  const token = resData.token;
+  localStorage.setItem("Token", token);
 
   return redirect("/");
 }
