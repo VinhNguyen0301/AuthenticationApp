@@ -22,7 +22,7 @@ function MovieDetailPage() {
           {(loadedEvent) => <MovieDetails movie={loadedEvent} />}
         </Await>
       </Suspense>
-      <p>Phan biet</p>
+      <h2>Recommend movie</h2>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={movies}>
           {(loadedEvents) => <MovieList movies={loadedEvents} />}
