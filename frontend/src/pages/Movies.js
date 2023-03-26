@@ -1,17 +1,48 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useLoaderData, json, defer, Await } from "react-router-dom";
 
 import MovieList from "../components/MoviesList";
+import SearchMovie from "../components/SearchMovie";
 
 function MoviesPage() {
   const { movies } = useLoaderData();
   console.log("movies", movies);
+  const [moviesList, setMoviesList] = useState(movies);
+
+  const search = async (searchValue) => {
+    // setLoading(true);
+    // setErrorMessage(null);
+    try {
+      const response = await fetch(
+        `https://swapi.dev/api/films/?search=${searchValue}`
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong !!!");
+      }
+
+      const searchData = await response.json();
+      const tranformData = searchData?.results?.map((d) => {
+        return {
+          id: d.episode_id,
+          title: d.title,
+          openingText: d.opening_crawl,
+          releaseDate: d.release_date,
+        };
+      });
+      setMoviesList(tranformData);
+      console.log("tranformData", tranformData);
+    } catch (error) {}
+  };
+
   return (
-    <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-      <Await resolve={movies}>
-        {(loadedEvents) => <MovieList movies={loadedEvents} />}
-      </Await>
-    </Suspense>
+    <div>
+      <SearchMovie search={search} />
+      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+        <Await resolve={moviesList}>
+          {(loadedEvents) => <MovieList movies={loadedEvents} />}
+        </Await>
+      </Suspense>
+    </div>
   );
 }
 

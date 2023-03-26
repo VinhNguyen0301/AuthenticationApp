@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import classes from "./Movie.module.css";
 
 const MovieItem = (movie) => {
-  console.log("11111", movie);
-  // const [movieData, setMovieData] = useState(movie)
   const movieDescriptionHandler = () => {
     console.log("Click to change description");
   };
