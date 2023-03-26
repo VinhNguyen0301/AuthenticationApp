@@ -3,6 +3,7 @@ import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import classes from "./EventItem.module.css";
 
 function EventItem({ event }) {
+  console.log("event 1", event);
   const token = useRouteLoaderData("root");
   const submit = useSubmit();
 

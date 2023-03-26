@@ -18,6 +18,11 @@ import AuthenticationPage, {
 } from "./pages/Authentication";
 import { action as LogoutAction } from "./pages/LogOut";
 import { checkAuthLoader, loaderAuthToken } from "./util/auth";
+import MovieDetailPage, {
+  loader as movieDetailLoader,
+} from "./pages/MovieDetail";
+import MoviesRootLayout from "./pages/MoviesRoot";
+import MoviesPage, { loader as moviesLoader } from "./pages/Movies";
 
 const router = createBrowserRouter([
   {
@@ -63,16 +68,34 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // movies
+      {
+        path: "movies",
+        element: <MoviesRootLayout />,
+        children: [
+          {
+            index: true,
+            element: <MoviesPage />,
+            loader: moviesLoader,
+          },
+          {
+            path: ":movieId",
+            id: "movie-detail",
+            loader: movieDetailLoader,
+            element: <MovieDetailPage />,
+          },
+          {
+            path: "new",
+            element: <NewEventPage />,
+            loader: checkAuthLoader,
+            action: manipulateEventAction,
+          },
+        ],
+      },
       {
         path: "auth",
         element: <AuthenticationPage />,
         action: authAction,
-      },
-      {
-        path: "newsletter",
-        element: <NewsletterPage />,
-        loader: checkAuthLoader,
-        action: newsletterAction,
       },
       {
         path: "logout",

@@ -33,12 +33,12 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to="/newsletter"
+              to="/movies"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
-              Newsletter
+              Movie
             </NavLink>
           </li>
           {!token && (

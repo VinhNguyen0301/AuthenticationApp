@@ -1,18 +1,21 @@
 import React from "react";
 
-import Movie from "./Movie";
+import MovieItem from "./MovieItem";
 import classes from "./MoviesList.module.css";
+import { Link } from "react-router-dom";
 
 const MovieList = (props) => {
   return (
     <ul className={classes["movies-list"]}>
       {props.movies.map((movie) => (
-        <Movie
-          key={movie.id}
-          title={movie.title}
-          releaseDate={movie.releaseDate}
-          openingText={movie.openingText}
-        />
+        <Link to={`/movies/${movie.id}`}>
+          <MovieItem
+            key={movie.id}
+            title={movie.title}
+            releaseDate={movie.releaseDate}
+            openingText={movie.openingText}
+          />
+        </Link>
       ))}
     </ul>
   );

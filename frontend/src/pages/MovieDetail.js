@@ -7,35 +7,35 @@ import {
   Await,
 } from "react-router-dom";
 
-import EventItem from "../components/EventItem";
-import EventsList from "../components/EventsList";
+import MovieDetails from "../components/MovieDetails";
+import MovieList from "../components/MoviesList";
 import { getAuthToken } from "../util/auth";
 
-function EventDetailPage() {
-  const { event, events } = useRouteLoaderData("event-detail");
+function MovieDetailPage() {
+  const { movie, movies } = useRouteLoaderData("movie-detail");
+  console.log("movie hihi", movie);
 
   return (
     <>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-        <Await resolve={event}>
-          {(loadedEvent) => <EventItem event={loadedEvent} />}
+        <Await resolve={movie}>
+          {(loadedEvent) => <MovieDetails movie={loadedEvent} />}
         </Await>
       </Suspense>
+      <p>Phan biet</p>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-        <Await resolve={events}>
-          {(loadedEvents) => <EventsList events={loadedEvents} />}
+        <Await resolve={movies}>
+          {(loadedEvents) => <MovieList movies={loadedEvents} />}
         </Await>
       </Suspense>
     </>
   );
 }
 
-export default EventDetailPage;
+export default MovieDetailPage;
 
 async function loadEvent(id) {
-  const response = await fetch("http://localhost:8080/events/" + id);
-
-  console.log("E1, E2", response);
+  const response = await fetch("https://swapi.dev/api/films/" + id);
 
   if (!response.ok) {
     throw json(
@@ -46,12 +46,24 @@ async function loadEvent(id) {
     );
   } else {
     const resData = await response.json();
-    return resData.event;
+    console.log("res 13", resData);
+    // const tranformData = resData?.filter((d) => {
+    //   return {
+    //     id: d.episode_id,
+    //     title: d.title,
+    //     openingText: d.opening_crawl,
+    //     releaseDate: d.release_date,
+    //   };
+    // });
+    // console.log("resData filter", resData);
+
+    return resData;
   }
 }
 
 async function loadEvents() {
-  const response = await fetch("http://localhost:8080/events");
+  const response = await fetch("https://swapi.dev/api/films/");
+
   if (!response.ok) {
     // return { isError: true, message: 'Could not fetch events.' };
     // throw new Response(JSON.stringify({ message: 'Could not fetch events.' }), {
@@ -65,24 +77,32 @@ async function loadEvents() {
     );
   } else {
     const resData = await response.json();
+    const tranformData = resData?.results?.map((d) => {
+      return {
+        id: d.episode_id,
+        title: d.title,
+        openingText: d.opening_crawl,
+        releaseDate: d.release_date,
+      };
+    });
 
-    return resData.events;
+    return tranformData;
   }
 }
 
 export async function loader({ request, params }) {
-  const id = params.eventId;
+  const id = params.movieId;
 
   return defer({
-    event: await loadEvent(id),
-    events: loadEvents(),
+    movie: await loadEvent(id),
+    movies: loadEvents(),
   });
 }
 
 export async function action({ params, request }) {
-  const eventId = params.eventId;
+  const movieId = params.movieId;
   const token = getAuthToken();
-  const response = await fetch("http://localhost:8080/events/" + eventId, {
+  const response = await fetch("https://swapi.dev/api/films/" + movieId, {
     method: request.method,
     headers: {
       Authorization: "Bearer " + token,
@@ -97,5 +117,5 @@ export async function action({ params, request }) {
       }
     );
   }
-  return redirect("/events");
+  return redirect("/movies");
 }
