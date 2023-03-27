@@ -64,7 +64,7 @@ function MainNavigation() {
         </ul>
       </nav>
       {/* <NewsletterSignup /> */}
-      <SearchMovie />
+      {/* <SearchMovie /> */}
     </header>
   );
 }
