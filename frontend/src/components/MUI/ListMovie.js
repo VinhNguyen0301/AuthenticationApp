@@ -5,7 +5,6 @@ import "./ListMovie.css";
 import { Link } from "react-router-dom";
 
 const ListMovie = (props) => {
-  console.log("123", props);
   return (
     <>
       {/* <CardMovie /> */}
@@ -14,13 +13,15 @@ const ListMovie = (props) => {
           <div key={`row${i}`} className="item">
             {props.movies.slice(i * 4, (i + 1) * 4).map((movie) => (
               <Link to={`/movies/${movie.id}`} key={movie.id}>
-                <ListMovieItem
-                  key={movie.id}
-                  title={movie.title}
-                  releaseDate={movie.releaseDate}
-                  openingText={movie.openingText}
-                  poster={movie.poster}
-                />
+                {movie.poster !== null && (
+                  <ListMovieItem
+                    key={movie.id}
+                    title={movie.title}
+                    releaseDate={movie.releaseDate}
+                    openingText={movie.openingText}
+                    poster={movie.poster}
+                  />
+                )}
               </Link>
             ))}
           </div>

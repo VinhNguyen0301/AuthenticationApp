@@ -9,7 +9,7 @@ const RecommendedMovie = (props) => {
     <div className="item">
       {props.movies.results.slice(0, 5).map((d) => {
         return (
-          <Box marginLeft="15px" marginTop="10px" maxWidth="200px">
+          <Box marginLeft="15px" marginTop="10px" maxWidth="200px" key={d.id}>
             <CardMedia
               component="img"
               image={
