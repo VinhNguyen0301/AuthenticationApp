@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 
 import PageContent from "../components/PageContent";
 
 import "./Home.css";
+import ListMovie from "../components/MUI/ListMovie";
+import CardDetail from "../components/MUI/CardDetail";
 
 function HomePage() {
   return (
-    <PageContent title="Welcome!">
-      <p>Just a homepage</p>
+    <PageContent>
+      {/* <ListMovie /> */}
+      <CardDetail />
     </PageContent>
   );
 }
