@@ -4,7 +4,6 @@ import styled from "styled-components";
 import "./CardDetail.css";
 
 const CardDetail = (movies) => {
-  console.log("22222222", movies);
   const Title = styled("div")({
     color: "#1d1e1f",
     lineHeight: "48px",

@@ -1,13 +1,11 @@
 import { Suspense, useState } from "react";
 import { useLoaderData, json, defer, Await } from "react-router-dom";
 
-import MovieList from "../components/MoviesList";
 import SearchMovie from "../components/SearchMovie";
 import ListMovie from "../components/MUI/ListMovie";
 
 function MoviesPage() {
   const { movies } = useLoaderData();
-  console.log("movies", movies);
   const [moviesList, setMoviesList] = useState(movies);
 
   const search = async (searchValue) => {
@@ -74,7 +72,6 @@ async function loadEvents() {
         poster: d.poster_path,
       };
     });
-    console.log("133", tranformData);
 
     return tranformData;
   }

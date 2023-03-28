@@ -5,6 +5,7 @@ import "./ListMovie.css";
 import { Link } from "react-router-dom";
 
 const ListMovie = (props) => {
+  console.log("123", props);
   return (
     <>
       {/* <CardMovie /> */}

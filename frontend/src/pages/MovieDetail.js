@@ -11,10 +11,11 @@ import MovieDetails from "../components/MovieDetails";
 import MovieList from "../components/MoviesList";
 import { getAuthToken } from "../util/auth";
 import CardDetail from "../components/MUI/CardDetail";
+import ListMovie from "../components/MUI/ListMovie";
+import RecommendedMovie from "../components/MUI/RecommendedMovie";
 
 function MovieDetailPage() {
   const { movie, movies } = useRouteLoaderData("movie-detail");
-  console.log("movie hihi", movies);
 
   return (
     <>
@@ -25,11 +26,11 @@ function MovieDetailPage() {
         </Await>
       </Suspense>
       <h2>Recommend movie</h2>
-      {/* <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={movies}>
-          {(loadedEvents) => <MovieList movies={loadedEvents} />}
+          {(loadedEvents) => <RecommendedMovie movies={loadedEvents} />}
         </Await>
-      </Suspense> */}
+      </Suspense>
     </>
   );
 }
@@ -37,7 +38,6 @@ function MovieDetailPage() {
 export default MovieDetailPage;
 
 async function loadEvent(id) {
-  // const response = await fetch("https://swapi.dev/api/films/" + id);
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=81f52e2b2c22f5da99b338a684f8f443`
   );
@@ -51,17 +51,14 @@ async function loadEvent(id) {
     );
   } else {
     const resData = await response.json();
-    console.log("res 13", resData);
     return resData;
   }
 }
 
-async function loadEvents() {
-  // const response = await fetch("https://swapi.dev/api/films/");
-
-  //API load discovery list movie
+async function loadEvents(id) {
+  //API recomment movie
   const response = await fetch(
-    "https://api.themoviedb.org/3/discover/movie?api_key=81f52e2b2c22f5da99b338a684f8f443"
+    `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=81f52e2b2c22f5da99b338a684f8f443`
   );
 
   if (!response.ok) {
@@ -77,19 +74,8 @@ async function loadEvents() {
     );
   } else {
     const resData = await response.json();
-    console.log("List movie ", resData);
 
-    const tranformData = resData?.results?.map((d) => {
-      return {
-        id: d.id,
-        title: d.title,
-        openingText: d.overview,
-        releaseDate: d.release_date,
-      };
-    });
-    console.log("tranformData", tranformData);
-
-    return tranformData;
+    return resData;
   }
 }
 
@@ -98,7 +84,7 @@ export async function loader({ request, params }) {
 
   return defer({
     movie: await loadEvent(id),
-    movies: loadEvents(),
+    movies: await loadEvents(id),
   });
 }
 
