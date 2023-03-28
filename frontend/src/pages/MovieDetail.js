@@ -64,8 +64,9 @@ async function loadEvent(id) {
 async function loadEvents() {
   // const response = await fetch("https://swapi.dev/api/films/");
 
+  //API load discovery list movie
   const response = await fetch(
-    "https://api.themoviedb.org/3/movie/550?api_key=81f52e2b2c22f5da99b338a684f8f443"
+    "https://api.themoviedb.org/3/discover/movie?api_key=81f52e2b2c22f5da99b338a684f8f443"
   );
 
   if (!response.ok) {
@@ -81,9 +82,9 @@ async function loadEvents() {
     );
   } else {
     const resData = await response.json();
-    console.log("New Databasde", resData);
+    console.log("List movie ", resData);
 
-    const tranformData = resData?.filter((d) => {
+    const tranformData = resData?.results?.map((d) => {
       return {
         id: d.id,
         title: d.title,

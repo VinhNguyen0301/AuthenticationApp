@@ -3,6 +3,7 @@ import { useLoaderData, json, defer, Await } from "react-router-dom";
 
 import MovieList from "../components/MoviesList";
 import SearchMovie from "../components/SearchMovie";
+import ListMovie from "../components/MUI/ListMovie";
 
 function MoviesPage() {
   const { movies } = useLoaderData();
@@ -39,7 +40,8 @@ function MoviesPage() {
       <SearchMovie search={search} />
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={moviesList}>
-          {(loadedEvents) => <MovieList movies={loadedEvents} />}
+          {/* {(loadedEvents) => <MovieList movies={loadedEvents} />} */}
+          {(loadedEvents) => <ListMovie movies={loadedEvents} />}
         </Await>
       </Suspense>
     </div>
@@ -49,7 +51,10 @@ function MoviesPage() {
 export default MoviesPage;
 
 async function loadEvents() {
-  const response = await fetch("https://swapi.dev/api/films/");
+  //API load discovery list movie
+  const response = await fetch(
+    "https://api.themoviedb.org/3/discover/movie?api_key=81f52e2b2c22f5da99b338a684f8f443"
+  );
 
   if (!response.ok) {
     throw json(
@@ -60,12 +65,14 @@ async function loadEvents() {
     );
   } else {
     const resData = await response.json();
+    console.log("133", resData);
     const tranformData = resData?.results?.map((d) => {
       return {
-        id: d.episode_id,
+        id: d.id,
         title: d.title,
-        openingText: d.opening_crawl,
+        openingText: d.overview,
         releaseDate: d.release_date,
+        poster: d.poster_path,
       };
     });
 
