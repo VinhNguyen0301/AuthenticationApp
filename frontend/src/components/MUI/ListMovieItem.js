@@ -6,7 +6,7 @@ const ListMovieItem = (props) => {
 
   return (
     //https://image.tmdb.org/t/p/w500/vJU3rXSP9hwUuLeq8IpfsJShLOk.jpg
-    <Box margin="10%">
+    <Box marginLeft="15px" marginTop="10px">
       <CardMedia
         component="img"
         image={`https://image.tmdb.org/t/p/w300/${props.poster}`}
