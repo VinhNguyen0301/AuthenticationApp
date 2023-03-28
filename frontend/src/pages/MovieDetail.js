@@ -7,11 +7,8 @@ import {
   Await,
 } from "react-router-dom";
 
-import MovieDetails from "../components/MovieDetails";
-import MovieList from "../components/MoviesList";
 import { getAuthToken } from "../util/auth";
 import CardDetail from "../components/MUI/CardDetail";
-import ListMovie from "../components/MUI/ListMovie";
 import RecommendedMovie from "../components/MUI/RecommendedMovie";
 
 function MovieDetailPage() {
@@ -21,11 +18,10 @@ function MovieDetailPage() {
     <>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={movie}>
-          {/* {(loadedEvent) => <MovieDetails movie={loadedEvent} />} */}
           {(loadedEvent) => <CardDetail movie={loadedEvent} />}
         </Await>
       </Suspense>
-      <h2>Recommend movie</h2>
+      <h2 style={{ marginLeft: "20px" }}>Recommend movie</h2>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={movies}>
           {(loadedEvents) => <RecommendedMovie movies={loadedEvents} />}
