@@ -3,6 +3,8 @@ import { useLoaderData, json, defer, Await } from "react-router-dom";
 
 import SearchMovie from "../components/SearchMovie";
 import ListMovie from "../components/MUI/ListMovie";
+import { Stack } from "@mui/material";
+import FilterMovie from "../components/MUI/FilterMovie";
 
 function MoviesPage() {
   const { movies } = useLoaderData();
@@ -12,9 +14,6 @@ function MoviesPage() {
     // setLoading(true);
     // setErrorMessage(null);
     try {
-      // const response = await fetch(
-      //   `https://swapi.dev/api/films/?search=${searchValue}`
-      // );
       const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=81f52e2b2c22f5da99b338a684f8f443&query=${searchValue}`
       );
@@ -41,9 +40,15 @@ function MoviesPage() {
   return (
     <div>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-        <div style={{ marginLeft: "15px" }}>
-          <SearchMovie search={search} />
-        </div>
+        <Stack direction="row" spacing={2} justifyContent="space-between">
+          <div style={{ marginLeft: "15px" }}>
+            <SearchMovie search={search} />
+          </div>
+          <div>
+            <FilterMovie />
+          </div>
+        </Stack>
+
         <Await resolve={moviesList}>
           {/* {(loadedEvents) => <MovieList movies={loadedEvents} />} */}
           {(loadedEvents) => <ListMovie movies={loadedEvents} />}
