@@ -2,10 +2,6 @@
 
 Stack reactjs, javascript, nodejs
 
-# Introduction about Authentication Movie App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## How to run project in your local
 
 In the project directory, you can run (cd backend and frontend ):
@@ -52,10 +48,11 @@ FrontEnd App run in port 3000, backend side in port 8080
 
 4. Some problems and bug need to improve
 
+- Add some feature in bonus point
+- Add like movie for later viewing
 - Support dark mode
-- Binding dynamic data for user repository component (followers,following, respository tab)
 - Apply typescript to code
-- Improve debounce search feature (search without button)
 - Some element in moble and tablet need improve with @media screen css
+- Remove some component and code unused
 
 5. Lastly, I'm really thanks for your waiting time. Hope we will have a chance to work togetther in the further. Thanks you too much for your time...
