@@ -36,6 +36,33 @@ function MoviesPage() {
       setMoviesList(tranformData);
     } catch (error) {}
   };
+  //https://api.themoviedb.org/3/discover/movie?api_key=xxx&with_genres=28
+  const searchByGenre = async (filterValue) => {
+    // setLoading(true);
+    // setErrorMessage(null);
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=81f52e2b2c22f5da99b338a684f8f443&with_genres=${filterValue}`
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong !!!");
+      }
+
+      const searchData = await response.json();
+      console.log("searchData", searchData);
+
+      const tranformData = searchData?.results?.map((d) => {
+        return {
+          id: d.id,
+          title: d.title,
+          openingText: d.overview,
+          releaseDate: d.release_date,
+          poster: d.poster_path,
+        };
+      });
+      setMoviesList(tranformData);
+    } catch (error) {}
+  };
 
   return (
     <div>
@@ -45,7 +72,7 @@ function MoviesPage() {
             <SearchMovie search={search} />
           </div>
           <div>
-            <FilterMovie />
+            <FilterMovie filter={searchByGenre} />
           </div>
         </Stack>
 
