@@ -1,18 +1,11 @@
 import React from "react";
-
 import PageContent from "../components/PageContent";
-
-import "./Home.css";
-import ListMovie from "../components/MUI/ListMovie";
-import CardDetail from "../components/MUI/CardDetail";
+import { useRouteLoaderData } from "react-router-dom";
 
 function HomePage() {
-  return (
-    <PageContent>
-      {/* <ListMovie /> */}
-      <CardDetail />
-    </PageContent>
-  );
+  const token = useRouteLoaderData("root");
+
+  return <PageContent>{token && "Login Success"}</PageContent>;
 }
 
 export default HomePage;

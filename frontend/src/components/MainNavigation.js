@@ -1,8 +1,7 @@
 import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
-import NewsletterSignup from "./NewsletterSignup";
-import SearchMovie from "./SearchMovie";
+import { Button } from "@mui/material";
 
 function MainNavigation() {
   const token = useRouteLoaderData("root");
@@ -22,7 +21,7 @@ function MainNavigation() {
               Home
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
               to="/events"
               className={({ isActive }) =>
@@ -31,7 +30,7 @@ function MainNavigation() {
             >
               Events
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink
               to="/movies"
@@ -57,14 +56,21 @@ function MainNavigation() {
           {token && (
             <li>
               <Form action="/logout" method="post">
-                <button>LogOut</button>
+                <button
+                  style={{
+                    padding: "0",
+                    border: "none",
+                    background: "none",
+                    color: "var(--color-primary-400)",
+                  }}
+                >
+                  LogOut
+                </button>
               </Form>
             </li>
           )}
         </ul>
       </nav>
-      {/* <NewsletterSignup /> */}
-      {/* <SearchMovie /> */}
     </header>
   );
 }
