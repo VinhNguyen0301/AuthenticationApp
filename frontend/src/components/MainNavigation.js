@@ -54,9 +54,18 @@ function MainNavigation() {
             </li>
           )}
           {token && (
-            <li style={{ marginTop: "-5px" }}>
+            <li>
               <Form action="/logout" method="post">
-                <Button>LogOut</Button>
+                <button
+                  style={{
+                    padding: "0",
+                    border: "none",
+                    background: "none",
+                    color: "var(--color-primary-400)",
+                  }}
+                >
+                  LogOut
+                </button>
               </Form>
             </li>
           )}
