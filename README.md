@@ -15,6 +15,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 FrontEnd App run in port 3000, backend side in port 8080
 
 ## Information about project
+## Video Demo
+
+https://www.youtube.com/watch?v=D-oD1Txr9fE
 
 # Some package using in this project
 
