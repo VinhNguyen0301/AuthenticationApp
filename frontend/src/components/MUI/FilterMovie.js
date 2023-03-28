@@ -36,7 +36,7 @@ const FilterMovie = (props) => {
 
   return (
     <Box sx={{ minWidth: 200 }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth style={{ backgroundColor: "white" }}>
         <InputLabel id="demo-simple-select-label">Genre Filter</InputLabel>
         <Select
           labelId="demo-simple-select-label"

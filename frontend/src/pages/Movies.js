@@ -3,12 +3,15 @@ import { useLoaderData, json, defer, Await } from "react-router-dom";
 
 import SearchMovie from "../components/SearchMovie";
 import ListMovie from "../components/MUI/ListMovie";
-import { Stack } from "@mui/material";
+import { Stack, useMediaQuery } from "@mui/material";
 import FilterMovie from "../components/MUI/FilterMovie";
+import "../index.css";
 
 function MoviesPage() {
   const { movies } = useLoaderData();
   const [moviesList, setMoviesList] = useState(movies);
+  const matches = useMediaQuery("(min-width:1269px)");
+  const mobileScreen = useMediaQuery("(min-width:600px)");
 
   const search = async (searchValue) => {
     // setLoading(true);
@@ -36,7 +39,6 @@ function MoviesPage() {
       setMoviesList(tranformData);
     } catch (error) {}
   };
-  //https://api.themoviedb.org/3/discover/movie?api_key=xxx&with_genres=28
   const searchByGenre = async (filterValue) => {
     // setLoading(true);
     // setErrorMessage(null);
@@ -67,14 +69,21 @@ function MoviesPage() {
   return (
     <div>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-        <Stack direction="row" spacing={2} justifyContent="space-between">
-          <div style={{ marginLeft: "15px" }}>
-            <SearchMovie search={search} />
-          </div>
-          <div>
-            <FilterMovie filter={searchByGenre} />
-          </div>
-        </Stack>
+        {mobileScreen && (
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={matches ? "58%" : "20%"}
+          >
+            <div>
+              <SearchMovie search={search} />
+            </div>
+            <div>
+              <FilterMovie filter={searchByGenre} />
+            </div>
+          </Stack>
+        )}
 
         <Await resolve={moviesList}>
           {/* {(loadedEvents) => <MovieList movies={loadedEvents} />} */}

@@ -48,3 +48,12 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+
+
+  @media screen and (min-width: 1269px) {
+    .responsive-screen {
+    margin-left: 10%;
+}
+
+  }
