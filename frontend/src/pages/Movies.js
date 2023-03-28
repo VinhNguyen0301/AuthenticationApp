@@ -65,7 +65,6 @@ async function loadEvents() {
     );
   } else {
     const resData = await response.json();
-    console.log("133", resData);
     const tranformData = resData?.results?.map((d) => {
       return {
         id: d.id,
@@ -75,6 +74,7 @@ async function loadEvents() {
         poster: d.poster_path,
       };
     });
+    console.log("133", tranformData);
 
     return tranformData;
   }

@@ -10,6 +10,7 @@ import {
 import MovieDetails from "../components/MovieDetails";
 import MovieList from "../components/MoviesList";
 import { getAuthToken } from "../util/auth";
+import CardDetail from "../components/MUI/CardDetail";
 
 function MovieDetailPage() {
   const { movie, movies } = useRouteLoaderData("movie-detail");
@@ -19,15 +20,16 @@ function MovieDetailPage() {
     <>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={movie}>
-          {(loadedEvent) => <MovieDetails movie={loadedEvent} />}
+          {/* {(loadedEvent) => <MovieDetails movie={loadedEvent} />} */}
+          {(loadedEvent) => <CardDetail movie={loadedEvent} />}
         </Await>
       </Suspense>
       <h2>Recommend movie</h2>
-      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+      {/* <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={movies}>
           {(loadedEvents) => <MovieList movies={loadedEvents} />}
         </Await>
-      </Suspense>
+      </Suspense> */}
     </>
   );
 }
@@ -35,7 +37,10 @@ function MovieDetailPage() {
 export default MovieDetailPage;
 
 async function loadEvent(id) {
-  const response = await fetch("https://swapi.dev/api/films/" + id);
+  // const response = await fetch("https://swapi.dev/api/films/" + id);
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=81f52e2b2c22f5da99b338a684f8f443`
+  );
 
   if (!response.ok) {
     throw json(
@@ -47,16 +52,6 @@ async function loadEvent(id) {
   } else {
     const resData = await response.json();
     console.log("res 13", resData);
-    // const tranformData = resData?.filter((d) => {
-    //   return {
-    //     id: d.episode_id,
-    //     title: d.title,
-    //     openingText: d.opening_crawl,
-    //     releaseDate: d.release_date,
-    //   };
-    // });
-    // console.log("resData filter", resData);
-
     return resData;
   }
 }
